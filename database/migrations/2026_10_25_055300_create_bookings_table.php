@@ -28,6 +28,8 @@ return new class extends Migration
             $table->decimal('distance_km', 8, 2);
             $table->unsignedInteger('duration_min');
             $table->decimal('fee', 8, 2);
+            $table->timestamp('accepted_at')->nullable();
+            $table->timestamp('picked_up_at')->nullable();
 
             // pending | accepted | picked_up | completed | cancelled
             $table->string('status')->default('pending');

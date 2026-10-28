@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class BookingController extends Controller
 {
@@ -67,9 +69,19 @@ class BookingController extends Controller
     //show 
     public function show(Request $request, $id)
     {
-        $booking = Booking::where('customer_id', $request->user()->id) 
+        $booking = Booking::where('customer_id', $request->user()->id)
             ->findOrFail($id);
     
-        return response()->json(['data' => $booking]);
+        $data = $booking->toArray();
+    
+        $rider = $booking->rider_id ? User::find($booking->rider_id) : null;
+    
+        $data['rider'] = $rider ? [
+            'id'    => $rider->id,
+            'name'  => $rider->name,
+            'phone' => $rider->phone ?? null,
+        ] : null;
+    
+        return response()->json(['data' => $data]);
     }
 }
