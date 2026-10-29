@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RiderController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -26,5 +27,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/rider/bookings/{id}/pickup', [RiderController::class, 'confirmPickup']);
     Route::post('/rider/bookings/{id}/dropoff', [RiderController::class, 'confirmDropoff']);
     Route::get('/rider/earnings', [RiderController::class, 'earnings']);
+    Route::post('/bookings/{id}/rating', [RatingController::class, 'store']);
 
 });     
